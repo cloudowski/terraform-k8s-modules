@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: casc-gitlab
+  labels:
+    jenkins-jenkins-config: "true"
+data:
+  gitlab.yaml: |+
+    credentials:
+      system:
+        domainCredentials:
+          - credentials:
+              - gitLabApiTokenImpl:
+                  apiToken: "{AQAAABAAAAAg63nJJOLue8fTg6ahuA9CA1j7hu1+tOfxjEuQxDwfrw3GBtZIu5F9ymdmztcBQ635}"
+                  id: "root"
+                  scope: GLOBAL
+
+    unclassified:
+      gitLabConnectionConfig:
+        connections:
+        - apiTokenId: "root"
+          clientBuilderId: "autodetect"
+          connectionTimeout: 10
+          ignoreCertificateErrors: true
+          name: "gitlab"
+          readTimeout: 10
+          url: "https://gitlab.chat.192.168.99.156.nip.io"

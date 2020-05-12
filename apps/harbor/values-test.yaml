@@ -1,0 +1,9 @@
+expose:
+  tls:
+    secretName: harbor-staging-letsencrypt
+
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+  ingress:
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-staging

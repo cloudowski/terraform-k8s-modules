@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pets
+  labels:
+      app: pets
+      tier: backend
+
+spec:
+  containers:
+  - image: cloudowski/docker-pets:1.0
+    name: pets
+    livenessProbe:
+      httpGet:
+        path: /health
+        port: 5000
+      initialDelaySeconds: 15
+      periodSeconds: 5
+
+    ports:
+    - containerPort: 5000
+      name: http
+    - containerPort: 7000
+      name: admin
+
+  terminationGracePeriodSeconds: 5

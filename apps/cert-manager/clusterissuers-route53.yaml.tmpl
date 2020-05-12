@@ -1,0 +1,43 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    # Email address used for ACME registration
+    email: tomasz@cloudowski.com
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: letsencrypt-staging
+    solvers:
+      - dns01:
+          route53:
+            region: ${ aws_region }
+            accessKeyID: ${ aws_access_key }
+            secretAccessKeySecretRef:
+              name: ${ aws_creds_secret }
+              key: ${ aws_creds_secret_key }
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # Email address used for ACME registration
+    email: tomasz@cloudowski.com
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    solvers:
+      - dns01:
+          route53:
+            region: ${ aws_region }
+            accessKeyID: ${ aws_access_key }
+            secretAccessKeySecretRef:
+              name: ${ aws_creds_secret }
+              key: ${ aws_creds_secret_key }

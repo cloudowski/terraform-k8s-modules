@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: casc-matrix-auth
+  labels:
+    jenkins-jenkins-config: "true"
+data:
+  matrix-auth.yaml: |+
+      jenkins:
+        authorizationStrategy:
+          globalMatrix:
+            permissions:
+            - "Agent/Build:authenticated"
+            - "Agent/Configure:authenticated"
+            - "Agent/Connect:authenticated"
+            - "Agent/Create:authenticated"
+            - "Agent/Delete:authenticated"
+            - "Agent/Disconnect:authenticated"
+            - "Credentials/Create:authenticated"
+            - "Credentials/Delete:authenticated"
+            - "Credentials/ManageDomains:authenticated"
+            - "Credentials/Update:authenticated"
+            - "Credentials/View:authenticated"
+            - "Job/Build:anonymous"
+            - "Job/Build:authenticated"
+            - "Job/Cancel:anonymous"
+            - "Job/Cancel:authenticated"
+            - "Job/Configure:authenticated"
+            - "Job/Create:authenticated"
+            - "Job/Delete:authenticated"
+            - "Job/Discover:authenticated"
+            - "Job/Move:authenticated"
+            - "Job/Read:anonymous"
+            - "Job/Read:authenticated"
+            - "Job/Workspace:authenticated"
+            - "Lockable Resources/Reserve:authenticated"
+            - "Lockable Resources/Unlock:authenticated"
+            - "Lockable Resources/View:authenticated"
+            - "Metrics/HealthCheck:authenticated"
+            - "Metrics/ThreadDump:authenticated"
+            - "Metrics/View:authenticated"
+            - "Overall/Administer:authenticated"
+            - "Overall/Read:authenticated"
+            - "Run/Delete:authenticated"
+            - "Run/Replay:authenticated"
+            - "Run/Update:authenticated"
+            - "SCM/Tag:authenticated"
+            - "View/Configure:authenticated"
+            - "View/Create:authenticated"
+            - "View/Delete:authenticated"
+            - "View/Read:authenticated"

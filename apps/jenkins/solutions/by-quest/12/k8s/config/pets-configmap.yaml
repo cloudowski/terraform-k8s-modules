@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  DB: "consul.default.svc.cluster.local"
+  DEBUG: "true"
+  OPTION_A: "Kitties"
+  ADMIN_PASSWORD_FILE: "/run/secrets/pets/admin-password"
+kind: ConfigMap
+metadata:
+  name: pets-config
+  labels:
+      app: pets

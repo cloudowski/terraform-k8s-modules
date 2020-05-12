@@ -1,0 +1,9 @@
+resources:
+- consul-pod.yaml
+- consul-svc.yaml
+- pets-configmap.yaml
+- pets-deployment.yaml
+- pets-ingress.yaml
+- pets-secret.yaml
+- pets-svc-cluster.yaml
+- pets-svc-node.yaml

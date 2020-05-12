@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: pets
+
+  labels:
+    app: pets
+    tier: backend
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pets
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: pets
+        tier: backend
+    spec:
+      terminationGracePeriodSeconds: 5
+
+      containers:
+      - image: cloudowski/docker-pets:1.0
+        name: pets
+
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 15
+          periodSeconds: 5
+
+        ports:
+        - containerPort: 5000
+          name: http
+        - containerPort: 7000
+          name: admin
+
+        envFrom:
+        - configMapRef:
+            name: pets-config
+
+        volumeMounts:
+        - name: admin-secret
+          mountPath: /run/secrets/pets
+
+      volumes:
+      - name: admin-secret
+        secret:
+          secretName: pets-admin-password

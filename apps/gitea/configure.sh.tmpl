@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+sleep 20
+
+curl -k -H "Content-Type: application/json" -X POST -d '{"username": "labs"}' --url "https://${admin_user}:${admin_password}@${domain}/api/v1/orgs" \
+    -w '%%{http_code}' -o /tmp/out -s > /tmp/http_code
+
+echo "OUT=$(cat /tmp/out)"
+echo "HTTP CODE=$(cat /tmp/http_code)"
+grep -q -E  '^(4..|2..)' /tmp/http_code || exit 1
+
+curl -k -H "Content-Type: application/json" -X POST -d '{"name": "student", "auto_init": false, "private": false}' --url "https://${admin_user}:${admin_password}@${domain}/api/v1/org/labs/repos" \
+    -w '%%{http_code}' -o /tmp/out -s > /tmp/http_code
+
+echo "OUT=$(cat /tmp/out)"
+echo "HTTP CODE=$(cat /tmp/http_code)"
+grep -q -E  '^(4..|2..)' /tmp/http_code || exit 1
+
+exit 0

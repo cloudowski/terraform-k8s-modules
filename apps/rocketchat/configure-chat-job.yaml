@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: configure-chat
+spec:
+  ttlSecondsAfterFinished: 300
+  template:
+    metadata:
+      name: configure-chat
+    spec:
+      containers:
+      - name: configure
+        image: alpine
+        command: [ "sh" ]
+        args: [ "-c", "apk add jq httpie bash; sh -c /scripts/configure-chat.sh" ]
+        volumeMounts:
+        - name: scripts
+          mountPath: "/scripts"
+          readOnly: true
+      restartPolicy: Never
+      volumes:
+      - name: scripts
+        secret:
+          secretName: configure-chat
+          defaultMode: 0755

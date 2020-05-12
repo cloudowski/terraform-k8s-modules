@@ -1,0 +1,69 @@
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.org/client-max-body-size: "10m"
+    ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+
+  tls:
+      - secretName: gitea-letsencypt-prod
+        hosts:
+          - git.app.labs.k8sworkshops.com
+
+service:
+  http:
+    serviceType:  ClusterIP
+    port: 3000
+    externalPort: 
+    externalHost: git.example.com
+  ssh:
+    serviceType: ClusterIP
+    port: 22
+
+resources:
+  gitea:
+    requests:
+      memory: 500Mi
+      cpu: 100m
+    limits:
+      memory: 2Gi
+      cpu: 1
+  memcached:
+    requests:
+      memory: 64Mi
+      cpu: 50m
+
+persistence:
+  enabled: true
+  giteaSize: 2Gi
+  accessMode: ReadWriteOnce
+  annotations: {}
+    # "helm.sh/resource-policy": keep
+
+mariadb:
+  enabled: true
+  replication:
+    enabled: false
+
+  master:
+    persistence:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 2Gi
+
+config:
+  secretKey: d2uh38dgwefyegrf73g723heuihfuye7wgf8dewjdeio
+  disableInstaller: true
+  offlineMode: false
+  requireSignin: false
+  disableRegistration: false
+  openidSignin: true
+
+
+

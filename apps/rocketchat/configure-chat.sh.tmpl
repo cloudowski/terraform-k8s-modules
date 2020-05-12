@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# set -x
+
+HEADERS=$(http --verify=no --ignore-stdin -pb ${ url }/api/v1/login "user=${admin_username}" "password=${admin_pass}" | jq -r '"X-Auth-Token:" + .data.authToken + " X-User-Id:" + .data.me._id')
+
+if [ "$HEADERS"x = "x" ];then
+    echo "Failed to get auth token.." &>2
+    sleep 120
+    exit 1
+fi
+
+echo "Creating #cicd channel"
+http --verify=no --ignore-stdin -pb ${ url }/api/v1/channels.create "name=cicd" $HEADERS
+
+echo "Creating jenkins user"
+http --verify=no --ignore-stdin -pb ${ url }/api/v1/users.create $HEADERS \
+    name=jenkins \
+    username=jenkins \
+    password=${jenkins_password} \
+    verified:=true \
+    joinDefaultChannels:=false \
+    email=jenkins@example.com
+

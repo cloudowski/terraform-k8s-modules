@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/issuer: letsencrypt-prod
+    ingress.kubernetes.io/proxy-body-size: 100m
+    ingress.kubernetes.io/ssl-redirect: "true"
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    nginx.org/client-max-body-size: 10m
+  labels:
+    app: rocketchat
+    chart: rocketchat-0.1.3
+    heritage: Tiller
+    release: chat
+  name: chat-rocketchat
+spec:
+  rules:
+  - host: chat.app.labs.k8sworkshops.com
+    http:
+      paths:
+      - backend:
+          serviceName: chat-rocketchat
+          servicePort: 3000
+        path: /
+  tls:
+  - hosts:
+    - chat.app.labs.k8sworkshops.com
+    secretName: chat-prod-letsencrypt
+  

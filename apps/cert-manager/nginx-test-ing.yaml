@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test-ingress-clusterissuer
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "true"
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+  - hosts:
+    - n1.app.labs.k8sworkshops.com
+    secretName: test-staging-letsencrypt1
+  rules:
+  - host: n1.app.labs.k8sworkshops.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nginx
+          servicePort: 80
+---      
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test-ingress-issuer
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "true"
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/issuer: letsencrypt-staging
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+  - hosts:
+    - n2.app.labs.k8sworkshops.com
+    secretName: test-staging-letsencrypt2
+  rules:
+  - host: n2.app.labs.k8sworkshops.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nginx
+          servicePort: 80

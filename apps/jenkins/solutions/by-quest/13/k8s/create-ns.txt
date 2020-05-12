@@ -1,0 +1,2 @@
+kubectl create ns pets-test
+kubectl create ns pets-prod

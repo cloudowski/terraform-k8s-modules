@@ -1,0 +1,8 @@
+replicaCount: 1
+minAvailable: 1
+
+ingress:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+  tls:
+    - secretName: chat-staging-letsencrypt
