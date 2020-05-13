@@ -32,3 +32,5 @@ mariadb:
       accessMode: ReadWriteOnce
       size: 2Gi
 
+
+

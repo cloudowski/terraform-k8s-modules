@@ -43,7 +43,7 @@ provider "kubernetes" {
   version          = "~> 1.11"
 }
 
-provider "helm" {
-  debug   = false
-  version = "<= 1.1"
-}
+# provider "helm" {
+#   debug   = false
+#   version = "<= 1.1"
+# }

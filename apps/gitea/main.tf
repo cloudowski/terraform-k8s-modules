@@ -9,25 +9,41 @@ locals {
   configure_script_secret_name = "gitea-post-script"
 }
 
-resource "helm_release" "gitea" {
-  count      = var.install ? 1 : 0
-  name       = "gitea"
-  namespace  = var.namespace
-  chart      = "gitea"
-  repository = data.helm_repository.k8s-land.metadata.0.name
-  wait       = false
+terraform {
+  required_providers {
+    helm = ">= 1.2.1"
+  }
+}
 
-  set_string {
+resource "helm_release" "gitea" {
+  count            = var.install ? 1 : 0
+  name             = "gitea"
+  namespace        = var.namespace
+  create_namespace = true
+  chart            = "gitea"
+  repository       = "https://charts.k8s.land"
+  wait             = false
+
+  set {
+    type  = "string"
     name  = "service.http.externalHost"
     value = local.gitea_url
   }
-  set_string {
+  set {
+    type  = "string"
     name  = "ingress.hostname"
     value = local.gitea_url
   }
-  set_string {
+  set {
+    type  = "string"
     name  = "ingress.tls[0].hosts[0]"
     value = local.gitea_url
+  }
+
+  set_sensitive {
+    type  = "string"
+    name  = "mariadb.rootUser.password"
+    value = var.admin_password
   }
 
   values = var.is_test ? [file("${path.module}/values.yaml"), file("${path.module}/values-test.yaml")] : [file("${path.module}/values.yaml")]
@@ -51,19 +67,6 @@ resource "null_resource" "post-script-create-user" {
 
 }
 
-# resource "null_resource" "post-script-configure" {
-#   count      = var.install ? 1 : 0
-#   depends_on = [helm_release.gitea, null_resource.post-script-create-user]
-#   provisioner "local-exec" {
-#     command = "${path.module}/configure.sh"
-#     environment = {
-#       DNSDOMAIN     = var.dns_domain
-#       ROOT_PASSWORD = var.root_password
-#       NAMESPACE     = var.namespace
-#     }
-#   }
-# }
-
 resource "kubernetes_secret" "gitea_post_script" {
   count = var.install ? 1 : 0
   metadata {
@@ -74,6 +77,8 @@ resource "kubernetes_secret" "gitea_post_script" {
   data = {
     "configure.sh" = local.configure_script
   }
+
+  depends_on = [helm_release.gitea]
 }
 
 resource "kubernetes_job" "configure_gitea" {
@@ -108,4 +113,6 @@ resource "kubernetes_job" "configure_gitea" {
     }
     backoff_limit = 4
   }
+
+  depends_on = [helm_release.gitea]
 }

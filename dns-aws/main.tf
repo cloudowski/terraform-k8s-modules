@@ -1,6 +1,7 @@
-data "helm_repository" "bitnami" {
-  name = "bitnami"
-  url  = "https://charts.bitnami.com/bitnami"
+terraform {
+  required_providers {
+    helm = ">= 1.2.1"
+  }
 }
 
 resource "random_string" "suffix" {
@@ -9,27 +10,32 @@ resource "random_string" "suffix" {
   upper   = false
 }
 
+
 resource "helm_release" "external-dns" {
   name       = "external-dns-${random_string.suffix.result}"
   namespace  = "kube-system"
-  repository = data.helm_repository.bitnami.metadata.0.name
+  repository = "https://charts.bitnami.com/bitnami"
   chart      = "external-dns"
   version    = "2.22.4"
 
-  set_string {
+  set {
+    type  = "string"
     name  = "provider"
     value = "aws"
   }
-  set_string {
+  set {
+    type  = "string"
     name  = "aws.zoneType"
     value = "public"
   }
-  set_string {
+  set {
+    type  = "string"
     name  = "domainFilters[0]"
     value = var.dns_domain
   }
 
-  set_string {
+  set {
+    type  = "string"
     name  = "aws.credentials.secretName"
     value = "extdns-awscreds-${random_string.suffix.result}"
   }
@@ -52,6 +58,8 @@ aws_access_key_id = ${aws_iam_access_key.extdns.id}
 aws_secret_access_key = ${aws_iam_access_key.extdns.secret}
 EOF
   }
+
+  depends_on = [var.dependencies]
 }
 
 resource "aws_iam_user" "extdns" {

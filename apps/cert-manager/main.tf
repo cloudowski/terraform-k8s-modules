@@ -9,16 +9,23 @@ locals {
 
 }
 
+terraform {
+  required_providers {
+    helm = ">= 1.2.1"
+  }
+}
+
 resource "helm_release" "cert-manager" {
   count = var.install ? 1 : 0
 
-  name       = "cert-manager"
-  namespace  = var.namespace
-  repository = data.helm_repository.jetstack.metadata.0.name
-  chart      = "cert-manager"
-  version    = var.chart_version
+  name             = "cert-manager"
+  namespace        = var.namespace
+  create_namespace = true
+  repository       = "https://charts.jetstack.io"
+  chart            = "cert-manager"
+  version          = var.chart_version
 
-  depends_on = [null_resource.cert-manager-pre-script]
+  depends_on = [null_resource.cert-manager-pre-script, var.dependencies]
 }
 
 resource "null_resource" "cert-manager-post-script" {
@@ -36,6 +43,8 @@ resource "null_resource" "cert-manager-pre-script" {
   provisioner "local-exec" {
     command = "kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/${var.chart_version}/cert-manager.crds.yaml"
   }
+
+  depends_on = [var.dependencies]
 }
 
 resource "kubernetes_secret" "cert_manager_awscreds" {
@@ -47,4 +56,6 @@ resource "kubernetes_secret" "cert_manager_awscreds" {
   data = {
     "secret-access-key" = aws_iam_access_key.cert_manager.secret
   }
+
+  depends_on = [var.dependencies]
 }

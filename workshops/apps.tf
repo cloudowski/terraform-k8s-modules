@@ -18,8 +18,8 @@ resource "null_resource" "namespaces" {
   provisioner "local-exec" {
     when    = destroy
     command = <<EOT
-      kubectl --wait=false delete ns labs
-      kubectl --wait=false delete ns cert-manager
+      kubectl get ns labs &> /dev/null && kubectl --wait=false delete ns labs
+      kubectl get ns cert-manager &> /dev/null && kubectl --wait=false delete ns cert-manager
     EOT
   }
 }
@@ -28,13 +28,13 @@ resource "null_resource" "namespaces" {
 # kubectl delete pvc -n labs --all
 
 module "cert-manager" {
-  source         = "../apps/cert-manager/"
-  dns_domain     = local.dns_domain
-  namespace      = "cert-manager"
-  chart_version  = "v0.14.0"
+  source     = "../apps/cert-manager/"
+  dns_domain = local.dns_domain
+  namespace  = "cert-manager"
+  # chart_version  = "v0.14.0"
   route53_region = var.aws_region
   install        = contains(var.install_apps, "cert-manager")
-  # k8s_endpoint   = local.app_deps
+  dependencies   = local.app_deps
 }
 
 module "gitea" {
@@ -48,21 +48,21 @@ module "gitea" {
 }
 
 module "harbor" {
-  source     = "../apps/harbor/"
-  dns_domain = local.dns_domain
-  namespace  = var.app_namespace
-  install    = contains(var.install_apps, "harbor")
-  is_test    = var.is_test
-  # k8s_endpoint = local.app_deps
+  source       = "../apps/harbor/"
+  dns_domain   = local.dns_domain
+  namespace    = var.app_namespace
+  install      = contains(var.install_apps, "harbor")
+  is_test      = var.is_test
+  dependencies = local.app_deps
 }
 
 module "jenkins" {
-  source     = "../apps/jenkins/"
-  dns_domain = local.dns_domain
-  namespace  = var.app_namespace
-  install    = contains(var.install_apps, "jenkins")
-  is_test    = var.is_test
-  # k8s_endpoint = local.app_deps
+  source       = "../apps/jenkins/"
+  dns_domain   = local.dns_domain
+  namespace    = var.app_namespace
+  install      = contains(var.install_apps, "jenkins")
+  is_test      = var.is_test
+  dependencies = local.app_deps
 }
 
 module "rocketchat" {
