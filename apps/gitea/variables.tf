@@ -26,7 +26,8 @@ variable "is_test" {
 }
 
 variable "dependencies" {
-  type = list(string)
+  type    = list(string)
+  default = []
 }
 
 

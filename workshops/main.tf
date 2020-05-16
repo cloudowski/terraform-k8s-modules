@@ -5,12 +5,13 @@
 # }
 
 module "addons" {
-  source = "../addons/"
-  # k8s_endpoint   = local.k8s_endpoint
+  source         = "../addons/"
+  dependencies   = local.app_deps
   install_addons = var.install_addons
 }
 
 module "dns" {
-  source     = "../dns-aws"
-  dns_domain = var.dns_domain
+  source       = "../dns-aws"
+  dns_domain   = var.dns_domain
+  dependencies = local.app_deps
 }

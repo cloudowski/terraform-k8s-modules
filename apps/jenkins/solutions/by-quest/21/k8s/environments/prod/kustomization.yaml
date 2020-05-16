@@ -1,8 +1,0 @@
-resources:
-- namespace.yaml
-- pets-configmap.yaml
-- pets-ingress.yaml
-- pets-secret.yaml
-- ../base
-
-namespace: pets-prod

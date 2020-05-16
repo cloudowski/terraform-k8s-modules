@@ -16,3 +16,7 @@ variable "is_test" {
   default = true
 }
 
+variable "dependencies" {
+  type    = list(string)
+  default = []
+}

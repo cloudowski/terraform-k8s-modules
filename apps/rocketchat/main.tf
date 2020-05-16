@@ -8,23 +8,32 @@ locals {
   )
   configure_script_secret_name = "rocketchat-post-script"
   admin_pass_secret_name       = "rocketchat-admin-pass"
-
 }
 
+terraform {
+  required_providers {
+    helm = ">= 1.2.1"
+  }
+}
+
+
 resource "helm_release" "rocketchat" {
-  count      = var.install ? 1 : 0
-  name       = "rocketchat"
-  namespace  = var.namespace
-  chart      = "rocketchat"
-  repository = data.helm_repository.stable.metadata.0.name
-  version    = "2.0.2"
+  count            = var.install ? 1 : 0
+  name             = "rocketchat"
+  create_namespace = true
+  namespace        = var.namespace
+  chart            = "rocketchat"
+  repository       = "https://kubernetes-charts.storage.googleapis.com"
+  version          = "2.0.2"
 
 
-  set_string {
+  set {
+    type  = "string"
     name  = "host"
     value = "chat.${var.dns_domain}"
   }
-  set_string {
+  set {
+    type  = "string"
     name  = "extraEnv"
     value = <<EOF
 - name: ADMIN_USERNAME
@@ -62,6 +71,8 @@ resource "kubernetes_secret" "rocketchat_admin_pass" {
     "ADMIN_USERNAME" = var.admin_username
     "ADMIN_EMAIL"    = var.admin_email
   }
+
+  depends_on = [var.dependencies]
 }
 
 resource "kubernetes_secret" "rocketchat_post_script" {
@@ -74,6 +85,8 @@ resource "kubernetes_secret" "rocketchat_post_script" {
   data = {
     "configure-chat.sh" = local.configure_script
   }
+
+  depends_on = [var.dependencies]
 }
 
 resource "kubernetes_job" "configure-rocketchat" {
@@ -108,4 +121,6 @@ resource "kubernetes_job" "configure-rocketchat" {
     }
     backoff_limit = 10
   }
+
+  depends_on = [var.dependencies]
 }

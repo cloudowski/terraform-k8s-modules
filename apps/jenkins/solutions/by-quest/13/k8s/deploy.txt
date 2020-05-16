@@ -1,5 +1,0 @@
-# test
-kubectl -n pets-test apply -R -f environments/test
-
-# prod
-kubectl -n pets-prod apply -R -f environments/prod

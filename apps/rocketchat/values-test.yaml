@@ -5,4 +5,7 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-staging
   tls:
+  tls:
     - secretName: chat-staging-letsencrypt
+      hosts:
+        - chat.app.labs.k8sworkshops.com

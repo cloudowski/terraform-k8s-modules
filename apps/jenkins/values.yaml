@@ -40,7 +40,7 @@ master:
   # jenkinsOpts: ""
   # jenkinsUrl: ""
   # Use ClusterIP if your setup includes ingress controller
-  serviceType: LoadBalancer
+  serviceType: ClusterIP
   # Jenkins master service annotations
   serviceAnnotations: {}
   serviceLabels: {}
