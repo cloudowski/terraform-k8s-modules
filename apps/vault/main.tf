@@ -8,9 +8,10 @@ resource "helm_release" "vault" {
   name      = "vault"
   namespace = var.namespace
   # create_namespace = true
-  chart = "${local.vault_helm_src}/vault-helm/"
-  # repository       = "https://charts.k8s.land"
-  wait = true
+  chart      = "vault"
+  repository = "https://helm.releases.hashicorp.com/"
+  version    = var.vault_version
+  wait       = true
 
   set {
     name  = "server.ingress.hosts[0].host"
@@ -23,26 +24,7 @@ resource "helm_release" "vault" {
 
   values = var.is_test ? [file("${path.module}/values.yaml"), file("${path.module}/values-test.yaml")] : [file("${path.module}/values.yaml")]
 
-  depends_on = [var.dependencies, null_resource.get_repo]
-}
-
-resource "null_resource" "get_repo" {
-  count = var.install ? 1 : 0
-
-  provisioner "local-exec" {
-    command = <<EOF
-    if git -C vault-helm rev-parse &> /dev/null;then
-      cd ./vault-helm
-      git fetch --tags
-    else
-      git clone https://github.com/hashicorp/vault-helm
-      cd ./vault-helm
-    fi
-    git checkout ${var.helm_version}
-    EOF
-
-    working_dir = local.vault_helm_src
-  }
+  depends_on = [var.dependencies]
 }
 
 resource "null_resource" "post-script-vault-init" {

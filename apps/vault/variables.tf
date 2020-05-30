@@ -25,10 +25,10 @@ variable "vault_init_output_file" {
   description = "Filename where to store 'vault operator init' command output"
 }
 
-variable "helm_version" {
+variable "vault_version" {
   type        = string
   description = "Version of the helm chart to use"
-  default     = "v0.5.0"
+  default     = "0.5.0"
 }
 
 variable "dependencies" {
