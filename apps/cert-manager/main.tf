@@ -1,8 +1,11 @@
 locals {
-  clusterissuers = templatefile("${path.module}/clusterissuers-route53.yaml.tmpl", {
+  issuers_template = var.solver == "route53" ? "clusterissuers-route53.yaml.tmpl" : "clusterissuers-ingress.yaml.tmpl"
+  aws_iam_access_key = var.solver == "route53" ? aws_iam_access_key.cert_manager[0].id : ""
+  clusterissuers = templatefile("${path.module}/${local.issuers_template}", {
     aws_region           = var.route53_region
-    aws_access_key       = aws_iam_access_key.cert_manager.id
+    aws_access_key       = local.aws_iam_access_key
     aws_creds_secret     = "cert-manager-awskey"
+    aws_creds_secret_key = "secret-access-key"
     aws_creds_secret_key = "secret-access-key"
     }
   )
@@ -48,13 +51,14 @@ resource "null_resource" "cert-manager-pre-script" {
 }
 
 resource "kubernetes_secret" "cert_manager_awscreds" {
+  count = var.solver == "route53" ? 1 : 0
   metadata {
     name      = "cert-manager-awskey"
     namespace = var.namespace
   }
 
   data = {
-    "secret-access-key" = aws_iam_access_key.cert_manager.secret
+    "secret-access-key" = aws_iam_access_key.cert_manager[0].secret
   }
 
   depends_on = [var.dependencies]

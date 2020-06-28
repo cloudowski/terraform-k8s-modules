@@ -34,6 +34,11 @@ resource "helm_release" "rocketchat" {
   }
   set {
     type  = "string"
+    name  = "ingress.tls[0].hosts[0]"
+    value = "chat.${var.dns_domain}"
+  }
+  set {
+    type  = "string"
     name  = "extraEnv"
     value = <<EOF
 - name: ADMIN_USERNAME

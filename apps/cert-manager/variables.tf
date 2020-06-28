@@ -4,11 +4,29 @@ variable "dns_domain" {
 }
 
 variable "route53_region" {
-  type = string
+  type    = string
+  default = "eu-west-1"
+}
+
+variable "acme_email" {
+  type    = string
+  default = "tomasz@cloudowski.com"
+}
+
+variable "solver" {
+  description = "Which solver to use - route53 or ingress"
+  default     = "route53"
+
+  # requires experimental feature
+  # validation {
+  #   condition     = var.solver == "route53" || var.solver == "ingress"
+  #   error_message = "The solver must be 'route53' or 'ingress'"
+  # }
 }
 
 variable "namespace" {
-  type = string
+  type    = string
+  default = "cert-manager"
 }
 
 variable "chart_version" {

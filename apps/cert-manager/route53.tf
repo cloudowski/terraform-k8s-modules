@@ -5,16 +5,19 @@ resource "random_string" "suffix" {
 }
 
 resource "aws_iam_user" "cert_manager" {
-  name = "cert-manager-${random_string.suffix.result}"
+  count = var.solver == "route53" ? 1 : 0
+  name  = "cert-manager-${random_string.suffix.result}"
 }
 
 resource "aws_iam_access_key" "cert_manager" {
-  user = aws_iam_user.cert_manager.name
+  count = var.solver == "route53" ? 1 : 0
+  user  = aws_iam_user.cert_manager[0].name
 }
 
 resource "aws_iam_user_policy" "cert_manager" {
-  name = "cert-manager-${random_string.suffix.result}"
-  user = aws_iam_user.cert_manager.name
+  count = var.solver == "route53" ? 1 : 0
+  name  = "cert-manager-${random_string.suffix.result}"
+  user  = aws_iam_user.cert_manager[0].name
 
   policy = <<EOF
 {
