@@ -2,6 +2,7 @@ locals {
   issuers_template = var.solver == "route53" ? "clusterissuers-route53.yaml.tmpl" : "clusterissuers-ingress.yaml.tmpl"
   aws_iam_access_key = var.solver == "route53" ? aws_iam_access_key.cert_manager[0].id : ""
   clusterissuers = templatefile("${path.module}/${local.issuers_template}", {
+    acme_email           = var.acme_email
     aws_region           = var.route53_region
     aws_access_key       = local.aws_iam_access_key
     aws_creds_secret     = "cert-manager-awskey"
