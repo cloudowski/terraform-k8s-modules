@@ -47,6 +47,15 @@ module "gitea" {
   dependencies   = local.app_deps
 }
 
+module "gitlab" {
+  source       = "../apps/gitlab/"
+  dns_domain   = local.dns_domain
+  namespace    = var.app_namespace
+  install      = contains(var.install_apps, "gitlab")
+  is_test      = var.is_test
+  dependencies = local.app_deps
+}
+
 module "harbor" {
   source       = "../apps/harbor/"
   dns_domain   = local.dns_domain

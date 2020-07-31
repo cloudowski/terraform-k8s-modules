@@ -1,0 +1,7 @@
+global:
+  ingress:
+    configureCertmanager: false
+    class: "nginx"
+    annotations:
+      "kubernetes.io/tls-acme": true
+      "cert-manager.io/cluster-issuer": letsencrypt-staging

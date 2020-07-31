@@ -4,14 +4,14 @@ locals {
 }
 
 resource "helm_release" "vault" {
-  count     = var.install ? 1 : 0
-  name      = "vault"
-  namespace = var.namespace
-  # create_namespace = true
-  chart      = "vault"
-  repository = "https://helm.releases.hashicorp.com/"
-  version    = var.vault_version
-  wait       = true
+  count            = var.install ? 1 : 0
+  name             = var.name
+  namespace        = var.namespace
+  create_namespace = true
+  chart            = "vault"
+  repository       = "https://helm.releases.hashicorp.com/"
+  version          = var.vault_version
+  wait             = true
 
   set {
     name  = "server.ingress.hosts[0].host"

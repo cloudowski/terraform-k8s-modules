@@ -7,6 +7,11 @@ variable "namespace" {
   type = string
 }
 
+variable "name" {
+  type    = string
+  default = "rocketchat"
+}
+
 variable "admin_username" {
   type    = string
   default = "cloudowski"

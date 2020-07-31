@@ -19,7 +19,7 @@ terraform {
 
 resource "helm_release" "rocketchat" {
   count            = var.install ? 1 : 0
-  name             = "rocketchat"
+  name             = var.name
   create_namespace = true
   namespace        = var.namespace
   chart            = "rocketchat"

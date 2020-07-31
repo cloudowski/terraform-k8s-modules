@@ -6,7 +6,7 @@ terraform {
 
 resource "helm_release" "jenkins" {
   count            = var.install ? 1 : 0
-  name             = "jenkins"
+  name             = var.name
   namespace        = var.namespace
   create_namespace = true
   repository       = "https://kubernetes-charts.storage.googleapis.com"

@@ -7,6 +7,11 @@ variable "namespace" {
   type = string
 }
 
+variable "name" {
+  type    = string
+  default = "gitea"
+}
+
 variable "admin_user" {
   type    = string
   default = "root"

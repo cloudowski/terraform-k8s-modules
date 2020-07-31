@@ -9,7 +9,7 @@ variable "namespace" {
 
 variable "name" {
   type    = string
-  default = "jenkins"
+  default = "gitlab"
 }
 
 variable "install" {

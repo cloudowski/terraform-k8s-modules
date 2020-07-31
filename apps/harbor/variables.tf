@@ -7,6 +7,11 @@ variable "namespace" {
   type = string
 }
 
+variable "name" {
+  type    = string
+  default = "harbor"
+}
+
 variable "install" {
   type = bool
 }

@@ -1,0 +1,41 @@
+# Minimal settings
+global:
+  ingress:
+    configureCertmanager: false
+    class: "nginx"
+    annotations:
+      "kubernetes.io/tls-acme": true
+      "cert-manager.io/cluster-issuer": letsencrypt-prod
+  hosts:
+    domain: test.example.com
+  minio:
+    enabled: true
+  registry:
+    enabled: false
+certmanager:
+  install: false
+nginx-ingress:
+  enabled: false
+prometheus:
+  install: false
+gitlab-runner:
+  install: false
+gitlab:
+  sidekiq:
+    minReplicas: 1
+    maxReplicas: 1
+  gitlab-shell:
+    minReplicas: 1
+    maxReplicas: 1
+  webservice:
+    ingress:
+      tls:
+        secretName: gitlab-gitlab-tls
+minio:
+  ingress:
+    tls:
+      secretName: gitlab-minio-tls
+registry:
+  ingress:
+    tls:
+      secretName: gitlab-registry-tls

@@ -17,7 +17,7 @@ terraform {
 
 resource "helm_release" "gitea" {
   count            = var.install ? 1 : 0
-  name             = "gitea"
+  name             = var.name
   namespace        = var.namespace
   create_namespace = true
   chart            = "gitea"

@@ -8,6 +8,11 @@ variable "namespace" {
   description = "Kubernetes namespace where to install vault"
 }
 
+variable "name" {
+  type    = string
+  default = "vault"
+}
+
 variable "install" {
   type        = bool
   description = "To install or not - that is up to you"
