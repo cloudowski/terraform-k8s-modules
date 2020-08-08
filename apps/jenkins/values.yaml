@@ -56,23 +56,26 @@ master:
 
   # List of plugins to be install during Jenkins master start
   installPlugins:
-    - kubernetes
-    - workflow-job
-    - workflow-aggregator
+    - ansicolor
+    - basic-branch-build-strategies
+    - blueocean
+    - configuration-as-code
     - credentials-binding
     - git
-    - prometheus
-    - blueocean
-    - job-dsl
     - gitea
-    - rocketchatnotifier
-    - gitlab-merge-request-jenkins
     - gitlab
-    - simple-theme-plugin
-    - ansicolor
-    - configuration-as-code
-    - basic-branch-build-strategies
+    - gitlab-merge-request-jenkins
+    - hashicorp-vault-pipeline
+    - hashicorp-vault-plugin
+    - job-dsl
+    - kubernetes
+    - oic-auth
+    - prometheus
+    - rocketchatnotifier
     - role-strategy
+    - simple-theme-plugin
+    - workflow-aggregator
+    - workflow-job
 
   # Enable to always override the installed plugins with the values of 'master.installPlugins' on upgrade or redeployment.
   # overwritePlugins: true
