@@ -69,3 +69,22 @@ resource "kubernetes_cluster_role_binding" "jenkins-deployer-admin" {
 
   depends_on = [var.dependencies]
 }
+
+resource "kubernetes_cluster_role_binding" "jenkins-edit" {
+  count = var.install ? 1 : 0
+  metadata {
+    name = "jenkins-edit"
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = "edit"
+  }
+  subject {
+    kind      = "ServiceAccount"
+    name      = "jenkins"
+    namespace = var.namespace
+  }
+
+  depends_on = [var.dependencies]
+}

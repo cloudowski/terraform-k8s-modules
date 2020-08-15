@@ -64,16 +64,21 @@ master:
     - git
     - gitea
     - gitlab
-    - gitlab-merge-request-jenkins
+    - gitlab-branch-source
     - hashicorp-vault-pipeline
     - hashicorp-vault-plugin
     - job-dsl
     - kubernetes
+    - kubernetes-credentials-provider
     - oic-auth
     - prometheus
+    - pipeline-multibranch-defaults
+    - pipeline-utility-steps
     - rocketchatnotifier
     - role-strategy
     - simple-theme-plugin
+    - ssh-slaves
+    - terraform
     - workflow-aggregator
     - workflow-job
 
