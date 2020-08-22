@@ -9,11 +9,16 @@ variable "namespace" {
 
 variable "name" {
   type    = string
-  default = "jenkins"
+  default = "prometheus"
 }
 
 variable "install" {
   type = bool
+}
+
+variable "chart_version" {
+  type    = string
+  default = "9.3.1"
 }
 
 variable "is_test" {
@@ -21,12 +26,17 @@ variable "is_test" {
   default = true
 }
 
+variable "admin_password" {
+  type    = string
+  default = "mirabelka"
+}
+
 variable "dependencies" {
   type    = list(string)
   default = []
 }
 
-variable "admin_password" {
+variable "grafana_custom_config" {
   type    = string
-  default = "mirabelka"
+  default = ""
 }

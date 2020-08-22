@@ -28,6 +28,12 @@ resource "helm_release" "harbor" {
     value = "notary.${var.dns_domain}"
   }
 
+  set {
+    type  = "string"
+    name  = "harborAdminPassword"
+    value = var.admin_password
+  }
+
   depends_on = [var.dependencies]
 }
 

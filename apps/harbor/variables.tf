@@ -25,3 +25,8 @@ variable "dependencies" {
   type    = list(string)
   default = []
 }
+
+variable "admin_password" {
+  type    = string
+  default = "mirabelka"
+}

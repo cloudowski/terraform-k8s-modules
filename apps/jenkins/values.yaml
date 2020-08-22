@@ -47,6 +47,10 @@ master:
   #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
   # Put labels on Jenkins master pod
   podLabels: {}
+  podAnnotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"
+    prometheus.io/path: "/prometheus"
   cli: false
   # javaOpts: >
   #   -Dcom.sun.management.jmxremote.port=4000

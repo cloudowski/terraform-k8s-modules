@@ -1,0 +1,53 @@
+alertmanager:
+  ingress:
+    enabled: true
+
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: "true"
+      kubernetes.io/tls-acme: "true"
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+      nginx.org/client-max-body-size: "0"
+      ingress.kubernetes.io/proxy-body-size: "0"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    ##
+    hosts:
+      - alertmanager.domain.com
+
+    tls:
+      - secretName: promalert-letsencrypt-staging
+        hosts:
+          - am.example.com
+
+grafana:
+  enabled: true
+  adminPassword: mirabelka
+
+  ingress:
+    enabled: true
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: "true"
+      kubernetes.io/tls-acme: "true"
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+      nginx.org/client-max-body-size: "0"
+      ingress.kubernetes.io/proxy-body-size: "0"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
+
+    tls:
+      - secretName: promgrafana-letsencrypt-staging
+        hosts:
+          - grafana.example.com
+
+prometheus:
+  ingress:
+    enabled: true
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: "true"
+      kubernetes.io/tls-acme: "true"
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+      nginx.org/client-max-body-size: "0"
+      ingress.kubernetes.io/proxy-body-size: "0"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    tls:
+      - secretName: prometheus-letsencrypt-staging
+        hosts:
+          - prometheus.example.com

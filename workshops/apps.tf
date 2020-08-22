@@ -57,21 +57,33 @@ module "gitlab" {
 }
 
 module "harbor" {
-  source       = "../apps/harbor/"
-  dns_domain   = local.dns_domain
-  namespace    = var.app_namespace
-  install      = contains(var.install_apps, "harbor")
-  is_test      = var.is_test
-  dependencies = local.app_deps
+  source         = "../apps/harbor/"
+  dns_domain     = local.dns_domain
+  namespace      = var.app_namespace
+  admin_password = var.app_admin_password
+  install        = contains(var.install_apps, "harbor")
+  is_test        = var.is_test
+  dependencies   = local.app_deps
 }
 
 module "jenkins" {
-  source       = "../apps/jenkins/"
-  dns_domain   = local.dns_domain
-  namespace    = var.app_namespace
-  install      = contains(var.install_apps, "jenkins")
-  is_test      = var.is_test
-  dependencies = local.app_deps
+  source         = "../apps/jenkins/"
+  dns_domain     = local.dns_domain
+  namespace      = var.app_namespace
+  admin_password = var.app_admin_password
+  install        = contains(var.install_apps, "jenkins")
+  is_test        = var.is_test
+  dependencies   = local.app_deps
+}
+
+module "prometheus" {
+  source         = "../apps/prometheus/"
+  dns_domain     = local.dns_domain
+  namespace      = "prometheus"
+  admin_password = var.app_admin_password
+  install        = contains(var.install_apps, "prometheus")
+  is_test        = var.is_test
+  dependencies   = local.app_deps
 }
 
 module "rocketchat" {

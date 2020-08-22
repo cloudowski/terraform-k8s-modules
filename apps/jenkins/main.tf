@@ -23,6 +23,12 @@ resource "helm_release" "jenkins" {
 
   set {
     type  = "string"
+    name  = "master.adminPassword"
+    value = var.admin_password
+  }
+
+  set {
+    type  = "string"
     name  = "master.ingress.tls[0].hosts[0]"
     value = "jenkins.${var.dns_domain}"
   }
