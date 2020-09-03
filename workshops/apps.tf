@@ -28,7 +28,7 @@ resource "null_resource" "namespaces" {
 # kubectl delete pvc -n labs --all
 
 module "cert-manager" {
-  source     = "../apps/cert-manager/"
+  source     = "../cert-manager/"
   dns_domain = local.dns_domain
   namespace  = "cert-manager"
   # chart_version  = "v0.14.0"
@@ -38,7 +38,7 @@ module "cert-manager" {
 }
 
 module "gitea" {
-  source         = "../apps/gitea/"
+  source         = "../gitea/"
   dns_domain     = local.dns_domain
   namespace      = var.app_namespace
   admin_password = var.app_admin_password
@@ -48,7 +48,7 @@ module "gitea" {
 }
 
 module "gitlab" {
-  source       = "../apps/gitlab/"
+  source       = "../gitlab/"
   dns_domain   = local.dns_domain
   namespace    = var.app_namespace
   install      = contains(var.install_apps, "gitlab")
@@ -57,7 +57,7 @@ module "gitlab" {
 }
 
 module "harbor" {
-  source         = "../apps/harbor/"
+  source         = "../harbor/"
   dns_domain     = local.dns_domain
   namespace      = var.app_namespace
   admin_password = var.app_admin_password
@@ -67,7 +67,7 @@ module "harbor" {
 }
 
 module "jenkins" {
-  source         = "../apps/jenkins/"
+  source         = "../jenkins/"
   dns_domain     = local.dns_domain
   namespace      = var.app_namespace
   admin_password = var.app_admin_password
@@ -77,7 +77,7 @@ module "jenkins" {
 }
 
 module "prometheus" {
-  source         = "../apps/prometheus/"
+  source         = "../prometheus/"
   dns_domain     = local.dns_domain
   namespace      = "prometheus"
   admin_password = var.app_admin_password
@@ -87,7 +87,7 @@ module "prometheus" {
 }
 
 module "rocketchat" {
-  source       = "../apps/rocketchat/"
+  source       = "../rocketchat/"
   dns_domain   = local.dns_domain
   namespace    = var.app_namespace
   admin_pass   = var.app_admin_password

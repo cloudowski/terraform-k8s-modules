@@ -5,12 +5,16 @@ expose:
     secretName: harbor-prod-letsencrypt
 
     annotations:
-      ingress.kubernetes.io/ssl-redirect: "true"
-      kubernetes.io/tls-acme: "true"
       cert-manager.io/cluster-issuer: letsencrypt-prod
-      nginx.org/client-max-body-size: "0"
+      kubernetes.io/tls-acme: "true"
+      ingress.kubernetes.io/ssl-redirect: "true"
       ingress.kubernetes.io/proxy-body-size: "0"
+      nginx.org/client-max-body-size: "0"
       nginx.ingress.kubernetes.io/proxy-body-size: "0"
+      nginx.ingress.kubernetes.io/proxy-buffering: "on"
+      nginx.ingress.kubernetes.io/proxy-connect-timeout: "15"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "30"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "30"
 
     notarySecretName: ""
     commonName: ""
@@ -176,4 +180,3 @@ database:
   internal:
     # The initial superuser password for internal database
     password: "changeit"
-

@@ -42,19 +42,19 @@ resource "helm_release" "prometheus" {
 
   set {
     type  = "string"
-    name  = "alermanager.externalUrl"
+    name  = "alertmanager.externalUrl"
     value = "https://am.${var.dns_domain}"
   }
 
   set {
     type  = "string"
-    name  = "alermanager.ingress.tls[0].hosts[0]"
+    name  = "alertmanager.ingress.tls[0].hosts[0]"
     value = "am.${var.dns_domain}"
   }
 
   set {
     type  = "string"
-    name  = "alermanager.ingress.hosts[0]"
+    name  = "alertmanager.ingress.hosts[0]"
     value = "am.${var.dns_domain}"
   }
 
