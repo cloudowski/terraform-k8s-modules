@@ -13,6 +13,10 @@ NEW_CONTEXT=default
 KUBECONFIG_FILE="kubeconfig"
 
 
+kubectl get serviceaccount ${SERVICE_ACCOUNT_NAME} \
+  --context ${CONTEXT} \
+  --namespace ${NAMESPACE} &> /dev/null \
+  || { echo '{"kubeconfig_base64": ""}'; exit 0; }
 SECRET_NAME=$(kubectl get serviceaccount ${SERVICE_ACCOUNT_NAME} \
   --context ${CONTEXT} \
   --namespace ${NAMESPACE} \
