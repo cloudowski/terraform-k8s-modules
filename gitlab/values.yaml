@@ -41,6 +41,7 @@ minio:
     tls:
       secretName: gitlab-minio-tls
 registry:
+  enabled: false
   ingress:
     tls:
       secretName: gitlab-registry-tls
