@@ -11,6 +11,7 @@ global:
       "nginx.ingress.kubernetes.io/proxy-connect-timeout": "15"
       "nginx.ingress.kubernetes.io/proxy-read-timeout": "30"
       "nginx.ingress.kubernetes.io/proxy-send-timeout": "30"
+      "nginx.ingress.kubernetes.io/proxy-max-temp-file-size": "512m"
   hosts:
     domain: test.example.com
   minio:

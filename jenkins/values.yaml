@@ -83,6 +83,10 @@ master:
     - simple-theme-plugin
     - ssh-slaves
     - terraform
+    - theme-manager
+    - solarized-theme
+    - material-theme
+    - dark-theme
     - workflow-aggregator
     - workflow-job
 
