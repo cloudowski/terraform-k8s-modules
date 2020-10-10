@@ -5,7 +5,7 @@ resource "helm_release" "harbor" {
   create_namespace = true
   repository       = "https://helm.goharbor.io/"
   chart            = "harbor"
-  version          = "1.4.2"
+  version          = "1.5.0"
   wait             = false
 
   values = var.is_test ? [file("${path.module}/values.yaml"), file("${path.module}/values-test.yaml")] : [file("${path.module}/values.yaml")]
