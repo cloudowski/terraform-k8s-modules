@@ -22,7 +22,7 @@ variable "admin_email" {
   # default = "tomasz@cloudowski.com"
 }
 
-variable "admin_pass" {
+variable "admin_password" {
   type = string
 }
 

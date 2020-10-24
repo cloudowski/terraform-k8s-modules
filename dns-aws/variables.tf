@@ -7,3 +7,7 @@ variable "dependencies" {
   type    = list(string)
   default = []
 }
+
+variable "namespace" {
+  default = "kube-system"
+}

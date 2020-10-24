@@ -14,7 +14,7 @@ resource "random_string" "prefix" {
   upper   = false
 }
 
-module "harbor" {
+module "gitlab" {
   source     = "../../gitlab/"
   dns_domain = "${random_string.prefix.result}.${var.dns_domain}"
   namespace  = kubernetes_namespace.this.metadata[0].name

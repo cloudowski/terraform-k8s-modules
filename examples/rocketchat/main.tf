@@ -26,6 +26,6 @@ module "rocketchat" {
   admin_username = "testadmin"
   admin_email    = "tomasz@cloudowski.com"
   namespace      = kubernetes_namespace.this.metadata[0].name
-  admin_pass     = random_string.password.result
+  admin_password = random_string.password.result
 }
 
