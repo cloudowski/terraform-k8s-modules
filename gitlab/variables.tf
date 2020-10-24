@@ -13,7 +13,8 @@ variable "name" {
 }
 
 variable "install" {
-  type = bool
+  type    = bool
+  default = true
 }
 
 variable "is_test" {

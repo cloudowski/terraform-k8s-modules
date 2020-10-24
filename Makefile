@@ -6,6 +6,11 @@ create-minikube-aws:
 	cd ./examples/minikube-aws; \
 	terraform apply -auto-approve
 
+create-minikube-aws-big:
+	export AWS_PROFILE=cloudowski; \
+	cd ./examples/minikube-aws; \
+	terraform apply -auto-approve -var instance_type="t3a.xlarge"
+
 destroy-minikube-aws:
 	export AWS_PROFILE=cloudowski; \
 	cd ./examples/minikube-aws; \
@@ -25,4 +30,8 @@ test-harbor:
 
 test-rocketchat:
 	cd ./rocketchat/test; \
+	KUBECONFIG=$(MINIKUBE_KUBECONFIG) go test
+
+test-gitlab:
+	cd ./gitlab/test; \
 	KUBECONFIG=$(MINIKUBE_KUBECONFIG) go test
