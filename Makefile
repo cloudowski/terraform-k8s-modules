@@ -18,3 +18,7 @@ test-cert-manager:
 test-jenkins:
 	cd ./jenkins/test; \
 	KUBECONFIG=$(MINIKUBE_KUBECONFIG) go test
+
+test-harbor:
+	cd ./harbor/test; \
+	KUBECONFIG=$(MINIKUBE_KUBECONFIG) go test

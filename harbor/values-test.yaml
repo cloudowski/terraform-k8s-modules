@@ -7,3 +7,49 @@ expose:
   ingress:
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-staging
+
+persistence:
+  enabled: true
+  resourcePolicy: "keep"
+  persistentVolumeClaim:
+    registry:
+      existingClaim: ""
+      storageClass: ""
+      subPath: ""
+      accessMode: ReadWriteOnce
+      size: 2Gi
+    chartmuseum:
+      existingClaim: ""
+      storageClass: ""
+      subPath: ""
+      accessMode: ReadWriteOnce
+      size: 1Gi
+    jobservice:
+      existingClaim: ""
+      storageClass: ""
+      subPath: ""
+      accessMode: ReadWriteOnce
+      size: 1Gi
+    # If external database is used, the following settings for database will
+    # be ignored
+    database:
+      existingClaim: ""
+      storageClass: ""
+      subPath: ""
+      accessMode: ReadWriteOnce
+      size: 2Gi
+    # If external Redis is used, the following settings for Redis will
+    # be ignored
+    redis:
+      existingClaim: ""
+      storageClass: ""
+      subPath: ""
+      accessMode: ReadWriteOnce
+      size: 1Gi
+
+  imageChartStorage:
+    disableredirect: false
+    type: filesystem
+    filesystem:
+      rootdirectory: /storage
+      #maxthreads: 100

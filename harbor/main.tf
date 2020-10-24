@@ -6,7 +6,7 @@ resource "helm_release" "harbor" {
   repository       = "https://helm.goharbor.io/"
   chart            = "harbor"
   version          = "1.5.0"
-  wait             = false
+  wait             = var.wait_for_helm
 
   values = var.is_test ? [file("${path.module}/values.yaml"), file("${path.module}/values-test.yaml")] : [file("${path.module}/values.yaml")]
 
