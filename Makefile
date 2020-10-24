@@ -22,3 +22,7 @@ test-jenkins:
 test-harbor:
 	cd ./harbor/test; \
 	KUBECONFIG=$(MINIKUBE_KUBECONFIG) go test
+
+test-rocketchat:
+	cd ./rocketchat/test; \
+	KUBECONFIG=$(MINIKUBE_KUBECONFIG) go test
