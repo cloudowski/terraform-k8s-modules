@@ -3,7 +3,7 @@ locals {
     url              = "https://chat.${var.dns_domain}"
     jenkins_password = var.jenkins_password
     admin_username   = var.admin_username
-    admin_pass       = var.admin_pass
+    admin_pass       = var.admin_password
     }
   )
   configure_script_secret_name = "rocketchat-post-script"
@@ -23,8 +23,8 @@ resource "helm_release" "rocketchat" {
   create_namespace = true
   namespace        = var.namespace
   chart            = "rocketchat"
-  repository       = "https://kubernetes-charts.storage.googleapis.com"
-  version          = "2.0.2"
+  repository       = "https://rocketchat.github.io/helm-charts"
+  version          = "3.0.1"
 
 
   set {
@@ -72,7 +72,7 @@ resource "kubernetes_secret" "rocketchat_admin_pass" {
   }
 
   data = {
-    "ADMIN_PASS"     = var.admin_pass
+    "ADMIN_PASS"     = var.admin_password
     "ADMIN_USERNAME" = var.admin_username
     "ADMIN_EMAIL"    = var.admin_email
   }

@@ -10,7 +10,6 @@ resource "random_string" "suffix" {
   upper   = false
 }
 
-
 resource "helm_release" "external-dns" {
   name       = "external-dns-${random_string.suffix.result}"
   namespace  = "kube-system"

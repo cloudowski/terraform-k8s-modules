@@ -6,7 +6,7 @@ resource "helm_release" "harbor" {
   repository       = "https://helm.goharbor.io/"
   chart            = "harbor"
   version          = "1.5.0"
-  wait             = false
+  wait             = var.wait_for_helm
 
   values = var.is_test ? [file("${path.module}/values.yaml"), file("${path.module}/values-test.yaml")] : [file("${path.module}/values.yaml")]
 
@@ -36,17 +36,3 @@ resource "helm_release" "harbor" {
 
   depends_on = [var.dependencies]
 }
-
-// resource "null_resource" "harbor-post-script" {
-//   count      = var.install ? 1 : 0
-//   depends_on = [helm_release.harbor]
-
-//   provisioner "local-exec" {
-//     command = <<EOT
-//       sleep 30
-//       kubectl -n ${var.namespace} get deploy -oyaml harbor-harbor-portal |sed -e 's/8080/80/'|kubectl apply -f- -n ${var.namespace}
-//       kubectl -n ${var.namespace} get svc -oyaml harbor-harbor-portal |sed -e 's/8080/80/'|kubectl apply -f- -n ${var.namespace}
-//     EOT
-//   }
-
-// }

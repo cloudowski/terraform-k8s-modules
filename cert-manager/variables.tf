@@ -1,45 +1,45 @@
 variable "dns_domain" {
   type        = string
-  description = "DNS domain name for the cluster"
+  description = "DNS domain name handled by cert-manager."
 }
 
-variable "route53_region" {
-  type    = string
-  default = "eu-west-1"
+variable "aws_region" {
+  default     = "us-east-1"
+  type        = string
+  description = "AWS region where cluster is installed."
 }
 
 variable "acme_email" {
-  type    = string
-  default = "tomasz@cloudowski.com"
+  type        = string
+  default     = ""
+  description = "Email address used for registration in ACME service."
 }
 
 variable "solver" {
-  description = "Which solver to use - route53 or ingress"
+  description = "Which solver to use - route53 or ingress."
   default     = "route53"
 
-  # requires experimental feature
-  # validation {
-  #   condition     = var.solver == "route53" || var.solver == "ingress"
-  #   error_message = "The solver must be 'route53' or 'ingress'"
-  # }
+  validation {
+    condition     = var.solver == "route53" || var.solver == "ingress"
+    error_message = "The solver must be 'route53' or 'ingress'."
+  }
 }
 
 variable "namespace" {
-  type    = string
-  default = "cert-manager"
+  type        = string
+  default     = "cert-manager"
+  description = "Namespace for cert-manager."
 }
 
 variable "chart_version" {
   type        = string
   description = "Version of the helm chart to install"
-  default     = "v0.15.0"
+  default     = "v1.2.0"
 }
 
-variable "install" {
-  type = bool
+variable "kubeconfig" {
+  type        = string
+  description = "KUBECONFIG env variable value used by kubectl in scripts."
+  default     = "~/.kube/config"
 }
 
-variable "dependencies" {
-  type    = list(string)
-  default = []
-}

@@ -13,7 +13,8 @@ variable "name" {
 }
 
 variable "install" {
-  type = bool
+  type    = bool
+  default = true
 }
 
 variable "is_test" {
@@ -21,12 +22,12 @@ variable "is_test" {
   default = true
 }
 
-variable "dependencies" {
-  type    = list(string)
-  default = []
+variable "admin_password" {
+  type = string
 }
 
-variable "admin_password" {
-  type    = string
-  default = "mirabelka"
+variable "kubeconfig" {
+  type        = string
+  description = "KUBECONFIG env variable value used by kubectl in scripts."
+  default     = "~/.kube/config"
 }

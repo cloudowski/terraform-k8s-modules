@@ -2,4 +2,6 @@
 *.tfstate
 *.tfstate.*
 *.plan
-.vscode
+*.tfvars
+.vscode/
+

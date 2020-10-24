@@ -1,18 +1,11 @@
-master:
+controller:
   image: "jenkins/jenkins"
   tag: "lts"
   imagePullPolicy: "Always"
   numExecutors: 0
   # configAutoReload requires UseSecurity is set to true:
-  useSecurity: true
-  # Allows to configure different SecurityRealm using Jenkins XML
-  securityRealm: |-
-    <securityRealm class="hudson.security.LegacySecurityRealm"/>
-  # Allows to configure different AuthorizationStrategy using Jenkins XML
-  authorizationStrategy: |-
-    <authorizationStrategy class="hudson.security.FullControlOnceLoggedInAuthorizationStrategy">
-      <denyAnonymousReadAccess>true</denyAnonymousReadAccess>
-    </authorizationStrategy>
+  adminSecret: true
+  
   adminUser: "admin"
   adminPassword: mirabelka
   # adminSshKey: <defaults to auto-generated>
@@ -67,7 +60,8 @@ master:
     - credentials-binding
     - git
     - gitea
-    - gitlab
+    - gitlab-plugin
+    - gitlab-oauth
     - gitlab-branch-source
     - hashicorp-vault-pipeline
     - hashicorp-vault-plugin
@@ -121,6 +115,153 @@ master:
       welcome-message: |
         jenkins:
           systemMessage: Welcome to our CI\CD server.  This Jenkins is configured and managed 'as code'.
+      theme: |
+        unclassified:
+          themeManager:
+            disableUserThemes: false
+            theme: "material-indigo"
+    securityRealm: |-
+      local:
+        allowsSignup: false
+        enableCaptcha: false
+        users:
+        - id: "${chart-admin-username}"
+          name: "Jenkins Admin"
+          password: "${chart-admin-password}"
+        - id: "u1"
+          name: "Jenkins User1"
+          password: "P@ssw0rd"
+        - id: "u2"
+          name: "Jenkins User2"
+          password: "P@ssw0rd"
+        - id: "u3"
+          name: "Jenkins User3"
+          password: "P@ssw0rd"
+        - id: "u4"
+          name: "Jenkins User4"
+          password: "P@ssw0rd"
+        - id: "u5"
+          name: "Jenkins User5"
+          password: "P@ssw0rd"
+        - id: "u6"
+          name: "Jenkins User6"
+          password: "P@ssw0rd"
+        - id: "u7"
+          name: "Jenkins User7"
+          password: "P@ssw0rd"
+        - id: "u8"
+          name: "Jenkins User8"
+          password: "P@ssw0rd"
+        - id: "u9"
+          name: "Jenkins User9"
+          password: "P@ssw0rd"
+        - id: "u10"
+          name: "Jenkins User10"
+          password: "P@ssw0rd"
+        - id: "u11"
+          name: "Jenkins User11"
+          password: "P@ssw0rd"
+        - id: "u12"
+          name: "Jenkins User12"
+          password: "P@ssw0rd"
+        - id: "u13"
+          name: "Jenkins User13"
+          password: "P@ssw0rd"
+        - id: "u14"
+          name: "Jenkins User14"
+          password: "P@ssw0rd"
+    authorizationStrategy: |-
+     roleBased:
+      roles:
+        global:
+        - assignments:
+          - "admin"
+          name: "admin"
+          pattern: ".*"
+          permissions:
+          - "Job/Move"
+          - "Job/Build"
+          - "Lockable Resources/View"
+          - "Credentials/Delete"
+          - "Credentials/ManageDomains"
+          - "Lockable Resources/Unlock"
+          - "View/Create"
+          - "Agent/Configure"
+          - "Job/Read"
+          - "Credentials/Update"
+          - "Agent/Create"
+          - "Job/ExtendedRead"
+          - "Overall/SystemRead"
+          - "Job/Delete"
+          - "Agent/Build"
+          - "View/Configure"
+          - "Metrics/HealthCheck"
+          - "Lockable Resources/Reserve"
+          - "Agent/Provision"
+          - "Metrics/ThreadDump"
+          - "SCM/Tag"
+          - "Job/Create"
+          - "Job/Discover"
+          - "Agent/ExtendedRead"
+          - "Credentials/View"
+          - "Agent/Connect"
+          - "Agent/Delete"
+          - "Run/Replay"
+          - "Agent/Disconnect"
+          - "Run/Delete"
+          - "Job/Cancel"
+          - "Overall/Read"
+          - "Run/Update"
+          - "Credentials/Create"
+          - "Overall/Administer"
+          - "View/Delete"
+          - "Job/Configure"
+          - "Metrics/View"
+          - "Job/Workspace"
+          - "View/Read"
+        - assignments:
+          - "u1"
+          - "u2"
+          - "u3"
+          - "u4"
+          - "u5"
+          - "u6"
+          - "u7"
+          - "u8"
+          - "u9"
+          - "u10"
+          - "u11"
+          - "u12"
+          - "u13"
+          - "u14"
+          name: "labuser"
+          pattern: ".*"
+          permissions:
+          - "Overall/Read"
+          - "Job/Move"
+          - "Job/Build"
+          - "View/Create"
+          - "Agent/Configure"
+          - "Job/Read"
+          - "Credentials/Update"
+          - "Agent/Create"
+          - "Job/ExtendedRead"
+          - "Job/Delete"
+          - "Agent/Build"
+          - "View/Configure"
+          - "SCM/Tag"
+          - "Job/Create"
+          - "Job/Discover"
+          - "Agent/Connect"
+          - "Run/Replay"
+          - "Run/Delete"
+          - "Job/Cancel"
+          - "Run/Update"
+          - "Credentials/Create"
+          - "View/Delete"
+          - "Job/Configure"
+          - "Job/Workspace"
+          - "View/Read"
 
   sidecars:
     configAutoReload:
@@ -129,7 +270,6 @@ master:
       # over SSH to reapply config when changes to the configScripts are detected.  The admin user (or account you specify in
       # master.adminUser) will have a random SSH private key (RSA 4096) assigned unless you specify adminSshKey.  This will be saved to a k8s secret.
       enabled: true
-      image: shadwell/k8s-sidecar:0.0.2
       imagePullPolicy: IfNotPresent
       # folder in the pod that should hold the collected dashboards:
       folder: "/var/jenkins_home/casc_configs"

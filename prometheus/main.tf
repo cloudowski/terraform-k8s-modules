@@ -3,8 +3,8 @@ resource "helm_release" "prometheus" {
   name             = var.name
   namespace        = var.namespace
   create_namespace = true
-  repository       = "https://kubernetes-charts.storage.googleapis.com"
-  chart            = "prometheus-operator"
+  repository       = "https://prometheus-community.github.io/helm-charts"
+  chart            = "kube-prometheus-stack"
   version          = var.chart_version
   wait             = true
 
@@ -66,7 +66,7 @@ resource "helm_release" "prometheus-adapter" {
   name             = "${var.name}-adapter"
   namespace        = var.namespace
   create_namespace = true
-  repository       = "https://kubernetes-charts.storage.googleapis.com"
+  repository       = "https://prometheus-community.github.io/helm-charts"
   chart            = "prometheus-adapter"
   wait             = true
 

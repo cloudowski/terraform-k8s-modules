@@ -13,10 +13,16 @@ variable "name" {
 }
 
 variable "install" {
-  type = bool
+  type    = bool
+  default = true
 }
 
 variable "is_test" {
+  type    = bool
+  default = true
+}
+
+variable "wait_for_helm" {
   type    = bool
   default = true
 }
@@ -27,6 +33,5 @@ variable "dependencies" {
 }
 
 variable "admin_password" {
-  type    = string
-  default = "mirabelka"
+  type = string
 }

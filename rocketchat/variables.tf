@@ -1,6 +1,6 @@
 variable "dns_domain" {
   type        = string
-  description = "DNS domain name for the cluster"
+  description = "Prefix for DNS domain name"
 }
 
 variable "namespace" {
@@ -13,16 +13,16 @@ variable "name" {
 }
 
 variable "admin_username" {
-  type    = string
-  default = "cloudowski"
+  type = string
+  # default = "cloudowski"
 }
 
 variable "admin_email" {
-  type    = string
-  default = "tomasz@cloudowski.com"
+  type = string
+  # default = "tomasz@cloudowski.com"
 }
 
-variable "admin_pass" {
+variable "admin_password" {
   type = string
 }
 
@@ -32,7 +32,8 @@ variable "jenkins_password" {
 }
 
 variable "install" {
-  type = bool
+  type    = bool
+  default = true
 }
 
 variable "is_test" {
@@ -41,5 +42,6 @@ variable "is_test" {
 }
 
 variable "dependencies" {
-  type = list(string)
+  type    = list(string)
+  default = []
 }

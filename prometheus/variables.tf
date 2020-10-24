@@ -13,12 +13,13 @@ variable "name" {
 }
 
 variable "install" {
-  type = bool
+  type    = bool
+  default = true
 }
 
 variable "chart_version" {
   type    = string
-  default = "9.3.1"
+  default = "14.1.2"
 }
 
 variable "is_test" {
@@ -27,8 +28,7 @@ variable "is_test" {
 }
 
 variable "admin_password" {
-  type    = string
-  default = "mirabelka"
+  type = string
 }
 
 variable "dependencies" {

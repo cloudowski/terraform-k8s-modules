@@ -1,14 +1,12 @@
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-staging
 spec:
   acme:
-    # The ACME server URL
     server: https://acme-staging-v02.api.letsencrypt.org/directory
-    # Email address used for ACME registration
+    preferredChain: ""
     email: ${ acme_email }
-    # Name of a secret used to store the ACME account private key
     privateKeySecretRef:
       name: letsencrypt-staging
     solvers:
@@ -21,17 +19,15 @@ spec:
               key: ${ aws_creds_secret_key }
 
 ---
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod
 spec:
   acme:
-    # The ACME server URL
     server: https://acme-v02.api.letsencrypt.org/directory
-    # Email address used for ACME registration
+    preferredChain: ""
     email: ${ acme_email }
-    # Name of a secret used to store the ACME account private key
     privateKeySecretRef:
       name: letsencrypt-prod
     solvers:

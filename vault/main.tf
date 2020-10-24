@@ -34,6 +34,7 @@ resource "null_resource" "post-script-vault-init" {
   provisioner "local-exec" {
     command = "${path.module}/vault-init.sh"
     environment = {
+      KUBECONFIG       = var.kubeconfig
       NAMESPACE        = var.namespace
       INIT_OUTPUT_FILE = var.vault_init_output_file
     }
