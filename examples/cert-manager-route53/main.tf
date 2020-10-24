@@ -13,7 +13,7 @@ resource "kubernetes_namespace" "cert-manager" {
 }
 
 module "cert-manager" {
-  source     = "../../modules/cert-manager/"
+  source     = "../../cert-manager/"
   dns_domain = var.dns_domain
   namespace  = kubernetes_namespace.cert-manager.metadata[0].name
   acme_email = var.acme_email

@@ -12,5 +12,5 @@ destroy-minikube-aws:
 	terraform destroy -auto-approve
 
 test-cert-manager:
-	cd ./modules/cert-manager/; \
+	cd ./cert-manager/; \
 	KUBECONFIG=$(MINIKUBE_KUBECONFIG) make test
