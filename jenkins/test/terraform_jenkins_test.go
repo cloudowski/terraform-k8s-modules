@@ -7,10 +7,9 @@ import (
 
 	"github.com/gruntwork-io/terratest/modules/k8s"
 	"github.com/gruntwork-io/terratest/modules/terraform"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func TestTerraformCertManagerRoute53(t *testing.T) {
+func TestTerraformJenkins(t *testing.T) {
 	t.Parallel()
 
 	kubeconfig_file := os.Getenv("KUBECONFIG")
@@ -19,7 +18,7 @@ func TestTerraformCertManagerRoute53(t *testing.T) {
 	}
 
 	terraformOptions := &terraform.Options{
-		TerraformDir: "../../../examples/cert-manager-route53/",
+		TerraformDir: "../../examples/jenkins/",
 		Vars: map[string]interface{}{
 			"kubeconfig": kubeconfig_file,
 		},
@@ -30,14 +29,7 @@ func TestTerraformCertManagerRoute53(t *testing.T) {
 
 	namespace := terraform.Output(t, terraformOptions, "namespace")
 
-	pods_labels := []string{
-		"app.kubernetes.io/component=controller,app.kubernetes.io/instance=cert-manager",
-		"app.kubernetes.io/component=cainjector,app.kubernetes.io/instance=cert-manager",
-		"app.kubernetes.io/component=webhook,app.kubernetes.io/instance=cert-manager",
-	}
 	options := k8s.NewKubectlOptions("", kubeconfig_file, namespace)
-	for _, v := range pods_labels {
-		k8s.WaitUntilNumPodsCreated(t, options, metav1.ListOptions{LabelSelector: v}, 1, 20, time.Second*10)
-	}
+	k8s.WaitUntilServiceAvailable(t, options, "jenkins", 30, time.Second*10)
 
 }

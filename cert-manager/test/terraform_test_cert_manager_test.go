@@ -35,10 +35,9 @@ func TestTerraformCertManagerRoute53(t *testing.T) {
 	}
 
 	terraform.InitAndApply(t, terraformOptions)
-	// defer terraform.Destroy(t, terraformOptions)
+	defer terraform.Destroy(t, terraformOptions)
 
 	namespace := terraform.Output(t, terraformOptions, "namespace")
-
 	podsLabels := []string{
 		"app.kubernetes.io/component=controller,app.kubernetes.io/instance=cert-manager",
 		"app.kubernetes.io/component=cainjector,app.kubernetes.io/instance=cert-manager",
@@ -56,21 +55,19 @@ func TestTerraformCertManagerRoute53(t *testing.T) {
 
 	secretName := terraform.Output(t, terraformTestOptions, "secret_name")
 	maxRetries := 30
-	sleepBetweenRetries := 5 * time.Second
+	sleepBetweenRetries := 4 * time.Second
+
+	kubectlCheckCert := "kubectl get cert " + secretName + " -o jsonpath='{.status.conditions[0].reason}'|grep Ready"
+	t.Logf("DEBUG: kubectl cmd: %s", kubectlCheckCert)
 
 	getCertCmd := shell.Command{
 		Command: "bash",
-		Args:    []string{"-c", "kubectl get cert " + secretName + " -o jsonpath='{.status.conditions[0].reason}'|grep Ready"},
+		Args:    []string{"-c", kubectlCheckCert},
 	}
 	retry.DoWithRetry(t, "Checking if certificate '"+secretName+"' has been signed", maxRetries, sleepBetweenRetries, func() (string, error) {
-		if err := shell.RunCommandE(t, getCertCmd); err != nil {
-			return "", fmt.Errorf("Not yet.. (%s)", err)
+		if out, err := shell.RunCommandAndGetOutputE(t, getCertCmd); err != nil {
+			return "", fmt.Errorf("Not yet..: (output=%s err=%s)", out, err)
 		}
 		return "", nil
-
 	})
-
-	options = k8s.NewKubectlOptions("", kubeconfig_file, "")
-	k8s.WaitUntilIngressAvailable(t, options, "cert-manager-test", 20, time.Second*5)
-
 }

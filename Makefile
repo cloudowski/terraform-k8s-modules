@@ -14,3 +14,7 @@ destroy-minikube-aws:
 test-cert-manager:
 	cd ./cert-manager/; \
 	KUBECONFIG=$(MINIKUBE_KUBECONFIG) make test
+
+test-jenkins:
+	cd ./jenkins/test; \
+	KUBECONFIG=$(MINIKUBE_KUBECONFIG) go test

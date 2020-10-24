@@ -32,8 +32,6 @@ resource "helm_release" "jenkins" {
     name  = "master.ingress.tls[0].hosts[0]"
     value = "jenkins.${var.dns_domain}"
   }
-
-  depends_on = [var.dependencies]
 }
 
 resource "null_resource" "jenkins-post-script" {
@@ -44,6 +42,9 @@ resource "null_resource" "jenkins-post-script" {
     command = <<EOT
       kubectl -n ${var.namespace} apply  -f ${path.module}/casc/
     EOT
+    environment = {
+      KUBECONFIG = var.kubeconfig
+    }
   }
 }
 
@@ -53,8 +54,6 @@ resource "kubernetes_service_account" "deployer" {
     name      = "deployer"
     namespace = var.namespace
   }
-
-  depends_on = [var.dependencies]
 }
 
 resource "kubernetes_cluster_role_binding" "jenkins-deployer-admin" {
@@ -72,8 +71,6 @@ resource "kubernetes_cluster_role_binding" "jenkins-deployer-admin" {
     name      = "deployer"
     namespace = var.namespace
   }
-
-  depends_on = [var.dependencies]
 }
 
 resource "kubernetes_cluster_role_binding" "jenkins-edit" {
@@ -91,6 +88,4 @@ resource "kubernetes_cluster_role_binding" "jenkins-edit" {
     name      = "jenkins"
     namespace = var.namespace
   }
-
-  depends_on = [var.dependencies]
 }

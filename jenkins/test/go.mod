@@ -1,4 +1,4 @@
-module github.com/cloudowski/terraform-k8s-modules/cert-manager
+module github.com/cloudowski/terraform-k8s-modules/jenkins
 
 go 1.15
 
