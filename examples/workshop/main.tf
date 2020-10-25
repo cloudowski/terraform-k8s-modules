@@ -5,6 +5,11 @@ terraform {
   }
 }
 
+locals {
+  full_dns_domain = "${random_string.dns_prefix.result}.${var.dns_domain}"
+  admin_password  = var.admin_password != "" ? var.admin_password : random_string.password.result
+}
+
 provider "aws" {
   region = var.aws_region
 }
@@ -48,20 +53,20 @@ module "cert-manager" {
 
 module "rocketchat" {
   source         = "../../rocketchat/"
-  dns_domain     = "${random_string.dns_prefix.result}.${var.dns_domain}"
+  dns_domain     = local.full_dns_domain
   admin_username = "testadmin"
   admin_email    = "tomasz@cloudowski.com"
   namespace      = kubernetes_namespace.labs.metadata[0].name
-  admin_password = random_string.password.result
+  admin_password = local.admin_password
   is_test        = var.is_test
   depends_on     = [module.cert-manager]
 }
 
 module "jenkins" {
   source         = "../../jenkins/"
-  dns_domain     = "${random_string.dns_prefix.result}.${var.dns_domain}"
+  dns_domain     = local.full_dns_domain
   namespace      = kubernetes_namespace.labs.metadata[0].name
-  admin_password = random_string.password.result
+  admin_password = local.admin_password
   kubeconfig     = var.kubeconfig
   is_test        = var.is_test
   depends_on     = [module.cert-manager]
@@ -69,16 +74,16 @@ module "jenkins" {
 
 module "harbor" {
   source         = "../../harbor/"
-  dns_domain     = "${random_string.dns_prefix.result}.${var.dns_domain}"
+  dns_domain     = local.full_dns_domain
   namespace      = kubernetes_namespace.labs.metadata[0].name
-  admin_password = random_string.password.result
+  admin_password = local.admin_password
   is_test        = var.is_test
   depends_on     = [module.cert-manager]
 }
 
 module "gitlab" {
   source     = "../../gitlab/"
-  dns_domain = "${random_string.dns_prefix.result}.${var.dns_domain}"
+  dns_domain = local.full_dns_domain
   namespace  = kubernetes_namespace.labs.metadata[0].name
   is_test    = var.is_test
   depends_on = [module.cert-manager]

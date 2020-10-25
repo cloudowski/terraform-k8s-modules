@@ -57,11 +57,3 @@ resource "null_resource" "save_kubeconfig" {
   }
 }
 
-# module "cert-manager" {
-#   source     = "../../modules/cert-manager/"
-#   dns_domain = var.dns_domain
-#   namespace  = "cert-manager"
-#   acme_email = var.acme_email
-#   kubeconfig = local.kubeconfig_file
-# }
-
