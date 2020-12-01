@@ -29,7 +29,8 @@ resource "helm_release" "cert-manager" {
   chart            = "cert-manager"
   version          = var.chart_version
 
-  depends_on = [null_resource.cert-manager-pre-script, var.dependencies]
+  # depends_on = [null_resource.cert-manager-pre-script, var.dependencies]
+  depends_on = [var.dependencies]
 }
 
 resource "null_resource" "cert-manager-post-script" {
