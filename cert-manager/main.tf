@@ -1,5 +1,5 @@
 locals {
-  issuers_template = var.solver == "route53" ? "clusterissuers-route53.yaml.tmpl" : "clusterissuers-ingress.yaml.tmpl"
+  issuers_template   = var.solver == "route53" ? "clusterissuers-route53.yaml.tmpl" : "clusterissuers-ingress.yaml.tmpl"
   aws_iam_access_key = var.solver == "route53" ? aws_iam_access_key.cert_manager[0].id : ""
   clusterissuers = templatefile("${path.module}/${local.issuers_template}", {
     acme_email           = var.acme_email
@@ -41,15 +41,15 @@ resource "null_resource" "cert-manager-post-script" {
   }
 }
 
-resource "null_resource" "cert-manager-pre-script" {
-  count = var.install ? 1 : 0
+# resource "null_resource" "cert-manager-pre-script" {
+#   count = var.install ? 1 : 0
 
-  provisioner "local-exec" {
-    command = "kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/${var.chart_version}/cert-manager.crds.yaml"
-  }
+#   provisioner "local-exec" {
+#     command = "kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/${var.chart_version}/cert-manager.crds.yaml"
+#   }
 
-  depends_on = [var.dependencies]
-}
+#   depends_on = [var.dependencies]
+# }
 
 resource "kubernetes_secret" "cert_manager_awscreds" {
   count = var.solver == "route53" ? 1 : 0
