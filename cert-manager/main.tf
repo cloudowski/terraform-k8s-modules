@@ -42,14 +42,14 @@ resource "null_resource" "cert-manager-post-script" {
   }
 }
 
-resource "null_resource" "cert-manager-pre-script" {
-  provisioner "local-exec" {
-    command = "kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/${var.chart_version}/cert-manager.crds.yaml"
-    environment = {
-      KUBECONFIG = var.kubeconfig
-    }
-  }
-}
+# resource "null_resource" "cert-manager-pre-script" {
+#   provisioner "local-exec" {
+#     command = "kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/${var.chart_version}/cert-manager.crds.yaml"
+#     environment = {
+#       KUBECONFIG = var.kubeconfig
+#     }
+#   }
+# }
 
 resource "kubernetes_secret" "cert_manager_awscreds" {
   count = var.solver == "route53" ? 1 : 0
