@@ -7,7 +7,55 @@ controller:
   adminSecret: true
   # Allows to configure different SecurityRealm using Jenkins XML
   securityRealm: |-
-    <securityRealm class="hudson.security.LegacySecurityRealm"/>
+      local:
+        allowsSignup: false
+        enableCaptcha: false
+        users:
+        - id: "${chart-admin-username}"
+          name: "Jenkins Admin"
+          password: "${chart-admin-password}"
+        - id: "u1"
+          name: "Jenkins User1"
+          password: "P@ssw0rd7"
+        - id: "u2"
+          name: "Jenkins User2"
+          password: "P@ssw0rd7"
+        - id: "u3"
+          name: "Jenkins User3"
+          password: "P@ssw0rd7"
+        - id: "u4"
+          name: "Jenkins User4"
+          password: "P@ssw0rd7"
+        - id: "u5"
+          name: "Jenkins User5"
+          password: "P@ssw0rd7"
+        - id: "u6"
+          name: "Jenkins User6"
+          password: "P@ssw0rd7"
+        - id: "u7"
+          name: "Jenkins User7"
+          password: "P@ssw0rd7"
+        - id: "u8"
+          name: "Jenkins User8"
+          password: "P@ssw0rd7"
+        - id: "u9"
+          name: "Jenkins User9"
+          password: "P@ssw0rd7"
+        - id: "u10"
+          name: "Jenkins User10"
+          password: "P@ssw0rd7"
+        - id: "u11"
+          name: "Jenkins User11"
+          password: "P@ssw0rd7"
+        - id: "u12"
+          name: "Jenkins User12"
+          password: "P@ssw0rd7"
+        - id: "u13"
+          name: "Jenkins User13"
+          password: "P@ssw0rd7"
+        - id: "u14"
+          name: "Jenkins User14"
+          password: "P@ssw0rd7"
   # Allows to configure different AuthorizationStrategy using Jenkins XML
   authorizationStrategy: |-
     <authorizationStrategy class="hudson.security.FullControlOnceLoggedInAuthorizationStrategy">
