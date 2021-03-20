@@ -17,13 +17,13 @@ resource "helm_release" "jenkins" {
 
   set {
     type  = "string"
-    name  = "master.ingress.hostName"
+    name  = "controller.ingress.hostName"
     value = "jenkins.${var.dns_domain}"
   }
 
   set {
     type  = "string"
-    name  = "master.adminPassword"
+    name  = "controller.adminPassword"
     value = var.admin_password
   }
 
