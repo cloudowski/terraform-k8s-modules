@@ -28,7 +28,7 @@ resource "helm_release" "cert-manager" {
   chart            = "cert-manager"
   version          = var.chart_version
 
-  # depends_on = [null_resource.cert-manager-pre-script]
+  depends_on = [null_resource.cert-manager-pre-script]
 }
 
 resource "null_resource" "cert-manager-post-script" {
@@ -42,14 +42,14 @@ resource "null_resource" "cert-manager-post-script" {
   }
 }
 
-# resource "null_resource" "cert-manager-pre-script" {
-#   provisioner "local-exec" {
-#     command = "kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/${var.chart_version}/cert-manager.crds.yaml"
-#     environment = {
-#       KUBECONFIG = var.kubeconfig
-#     }
-#   }
-# }
+resource "null_resource" "cert-manager-pre-script" {
+  provisioner "local-exec" {
+    command = "kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/${var.chart_version}/cert-manager.crds.yaml"
+    environment = {
+      KUBECONFIG = var.kubeconfig
+    }
+  }
+}
 
 resource "kubernetes_secret" "cert_manager_awscreds" {
   count = var.solver == "route53" ? 1 : 0
