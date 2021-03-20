@@ -34,7 +34,7 @@ variable "namespace" {
 variable "chart_version" {
   type        = string
   description = "Version of the helm chart to install"
-  default     = "v0.15.0"
+  default     = "v1.2.0"
 }
 
 variable "kubeconfig" {
