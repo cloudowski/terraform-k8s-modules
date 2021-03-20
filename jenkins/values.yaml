@@ -214,7 +214,6 @@ controller:
           - "Run/Update"
           - "Credentials/Create"
           - "Overall/Administer"
-          - "Overall/Read"
           - "View/Delete"
           - "Job/Configure"
           - "Metrics/View"
@@ -238,6 +237,7 @@ controller:
           name: "labuser"
           pattern: ".*"
           permissions:
+          - "Overall/Read"
           - "Job/Move"
           - "Job/Build"
           - "View/Create"
