@@ -1,10 +1,10 @@
-master:
+controller:
   image: "jenkins/jenkins"
   tag: "lts"
   imagePullPolicy: "Always"
   numExecutors: 0
   # configAutoReload requires UseSecurity is set to true:
-  useSecurity: true
+  adminSecret: true
   # Allows to configure different SecurityRealm using Jenkins XML
   securityRealm: |-
     <securityRealm class="hudson.security.LegacySecurityRealm"/>
@@ -129,7 +129,6 @@ master:
       # over SSH to reapply config when changes to the configScripts are detected.  The admin user (or account you specify in
       # master.adminUser) will have a random SSH private key (RSA 4096) assigned unless you specify adminSshKey.  This will be saved to a k8s secret.
       enabled: true
-      image: shadwell/k8s-sidecar:0.0.2
       imagePullPolicy: IfNotPresent
       # folder in the pod that should hold the collected dashboards:
       folder: "/var/jenkins_home/casc_configs"

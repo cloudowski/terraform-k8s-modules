@@ -9,9 +9,9 @@ resource "helm_release" "jenkins" {
   name             = var.name
   namespace        = var.namespace
   create_namespace = true
-  repository       = "https://kubernetes-charts.storage.googleapis.com"
+  repository       = "https://charts.jenkins.io"
   chart            = "jenkins"
-  version          = "1.6.0"
+  version          = "3.2.4"
 
   values = var.is_test ? [file("${path.module}/values.yaml"), file("${path.module}/values-test.yaml")] : [file("${path.module}/values.yaml")]
 
