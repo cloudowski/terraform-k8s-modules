@@ -170,7 +170,7 @@ controller:
         - id: "u14"
           name: "Jenkins User14"
           password: "P@ssw0rd7"
-  authorizationStrategy: |-
+    authorizationStrategy: |-
      roleBased:
       roles:
         global:
