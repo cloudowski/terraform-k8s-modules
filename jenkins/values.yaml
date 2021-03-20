@@ -67,7 +67,7 @@ controller:
     - credentials-binding
     - git
     - gitea
-    - gitlab
+    - gitlab-plugin
     - gitlab-branch-source
     - hashicorp-vault-pipeline
     - hashicorp-vault-plugin
