@@ -214,6 +214,7 @@ controller:
           - "Run/Update"
           - "Credentials/Create"
           - "Overall/Administer"
+          - "Overall/Read"
           - "View/Delete"
           - "Job/Configure"
           - "Metrics/View"
