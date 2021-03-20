@@ -23,7 +23,7 @@ resource "helm_release" "rocketchat" {
   create_namespace = true
   namespace        = var.namespace
   chart            = "rocketchat"
-  repository       = "https://kubernetes-charts.storage.googleapis.com"
+  repository       = "https://rocketchat.github.io/helm-charts"
   version          = "2.0.6"
 
 
