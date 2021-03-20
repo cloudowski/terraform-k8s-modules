@@ -29,7 +29,7 @@ resource "helm_release" "jenkins" {
 
   set {
     type  = "string"
-    name  = "master.ingress.tls[0].hosts[0]"
+    name  = "controller.ingress.tls[0].hosts[0]"
     value = "jenkins.${var.dns_domain}"
   }
 }
