@@ -6,10 +6,10 @@ metadata:
     jenkins-jenkins-config: "true"
 data:
   theme.yaml: |+
-    unclassified:
-      themeManager:
-        disableUserThemes: false
-        theme: "solarizedSystem"
+    # unclassified:
+    #   themeManager:
+    #     disableUserThemes: false
+    #     theme: "solarizedSystem"
     # simple-theme-plugin:
     #     elements:
     #       - cssUrl:
