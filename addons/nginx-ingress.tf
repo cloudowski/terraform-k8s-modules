@@ -4,11 +4,16 @@ resource "helm_release" "nginx-ingress" {
   namespace  = "kube-system"
   repository = "https://kubernetes.github.io/ingress-nginx"
   chart      = "ingress-nginx"
-  version    = "3.24.0"
+  version    = "4.0.18"
 
   set {
     type  = "string"
     name  = "controller.publishService.enabled"
+    value = "true"
+  }
+  set {
+    type  = "string"
+    name  = "controller.ingressClassResource.default"
     value = "true"
   }
   depends_on = [var.dependencies]
