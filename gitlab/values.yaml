@@ -32,6 +32,9 @@ deployments:
     minReplicas: 1
     maxReplicas: 2
 gitlab:
+  hpa:
+    minReplicas: 1
+    maxReplicas: 2
   sidekiq:
     minReplicas: 1
     maxReplicas: 2
@@ -50,6 +53,10 @@ gitlab:
     resources:
       requests:
         cpu: 100m
+  workhorse:
+    resources:
+      requests:
+        cpu: 50m
 minio:
   ingress:
     tls:
