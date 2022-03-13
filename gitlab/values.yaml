@@ -32,6 +32,7 @@ gitlab:
     minReplicas: 1
     maxReplicas: 1
   gitlab-shell:
+    enabled: true
     minReplicas: 1
     maxReplicas: 1
   webservice:
