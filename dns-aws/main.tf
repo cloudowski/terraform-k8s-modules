@@ -15,7 +15,7 @@ resource "helm_release" "external-dns" {
   namespace  = "kube-system"
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "external-dns"
-  version    = "2.22.4"
+  version    = "6.1.8"
 
   set {
     type  = "string"
