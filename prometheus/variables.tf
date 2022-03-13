@@ -19,7 +19,7 @@ variable "install" {
 
 variable "chart_version" {
   type    = string
-  default = "14.1.2"
+  default = "33.2.1"
 }
 
 variable "is_test" {
