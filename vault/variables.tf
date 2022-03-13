@@ -33,7 +33,7 @@ variable "vault_init_output_file" {
 variable "vault_version" {
   type        = string
   description = "Version of the helm chart to use"
-  default     = "0.8.0"
+  default     = "0.19.0"
 }
 
 variable "kubeconfig" {
