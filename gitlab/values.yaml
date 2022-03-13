@@ -27,6 +27,10 @@ prometheus:
   install: false
 gitlab-runner:
   install: false
+deployments:
+  hpa:
+    minReplicas: 1
+    maxReplicas: 2
 gitlab:
   sidekiq:
     minReplicas: 1
