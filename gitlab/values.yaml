@@ -30,15 +30,22 @@ gitlab-runner:
 gitlab:
   sidekiq:
     minReplicas: 1
-    maxReplicas: 1
+    maxReplicas: 2
+    resources:
+      requests:
+        cpu: 100m
   gitlab-shell:
     enabled: true
     minReplicas: 1
-    maxReplicas: 1
+    maxReplicas: 2
   webservice:
     ingress:
       tls:
         secretName: gitlab-gitlab-tls
+    workerProcesses: 1
+    resources:
+      requests:
+        cpu: 100m
 minio:
   ingress:
     tls:
@@ -48,3 +55,13 @@ registry:
   ingress:
     tls:
       secretName: gitlab-registry-tls
+
+postgresql:
+  primary:
+    resources:
+      requests:
+        cpu: 100m
+  master:
+    resources:
+      requests:
+        cpu: 100m
