@@ -35,3 +35,7 @@ variable "dependencies" {
 variable "admin_password" {
   type = string
 }
+
+variable "chart_version" {
+  default = "1.9.3"
+}
