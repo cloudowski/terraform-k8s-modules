@@ -4,7 +4,7 @@ resource "helm_release" "nginx-ingress" {
   namespace  = "kube-system"
   repository = "https://kubernetes.github.io/ingress-nginx"
   chart      = "ingress-nginx"
-  version    = "3.24.0"
+  version    = "4.2.3"
 
   set {
     type  = "string"

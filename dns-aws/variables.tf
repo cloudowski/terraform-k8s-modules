@@ -11,3 +11,7 @@ variable "dependencies" {
 variable "namespace" {
   default = "kube-system"
 }
+
+variable "chart_version" {
+  default = "6.8.1"
+}
