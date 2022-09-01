@@ -26,3 +26,7 @@ variable "dependencies" {
   type    = list(string)
   default = []
 }
+
+variable "chart_version" {
+  default = "6.3.2"
+}
